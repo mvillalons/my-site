@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mauro — Financial Economist & Researcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:        #F5F2EC;
+      --bg-card:   #EDEAE2;
+      --ink:       #1A1814;
+      --ink-mid:   #4A4640;
+      --ink-soft:  #8A8278;
+      --accent:    #1B3A5C;
+      --accent-warm: #8B4513;
+      --rule:      #C8C2B8;
+      --serif:     'Cormorant Garamond', Georgia, serif;
+      --mono:      'DM Mono', 'Courier New', monospace;
+      --sans:      'DM Sans', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NOISE TEXTURE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+
+    /* ─── LAYOUT ─── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(245, 242, 236, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ─── HERO ─── */
+    #home {
+      padding: 140px 0 100px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--ink-soft);
+    }
+
+    h1.hero-name {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+
+    h1.hero-name em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--ink-mid);
+      margin-bottom: 2.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .hero-bio {
+      max-width: 560px;
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--ink-mid);
+      margin-bottom: 3rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.7rem 1.75rem;
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--accent);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .btn-ghost {
+      display: inline-block;
+      padding: 0.7rem 1.75rem;
+      background: transparent;
+      color: var(--ink-mid);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--rule);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--ink-mid);
+      color: var(--ink);
+    }
+
+    /* ─── SECTION SHARED ─── */
+    section {
+      padding: 90px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+
+    .section-num {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--ink-soft);
+    }
+
+    h2.section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    h2.section-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    /* ─── ABOUT ─── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    @media (max-width: 640px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    .about-text p {
+      color: var(--ink-mid);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .about-sidebar {
+      padding-top: 0.25rem;
+    }
+
+    .sidebar-block {
+      margin-bottom: 2.5rem;
+    }
+
+    .sidebar-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .sidebar-item {
+      font-size: 0.88rem;
+      color: var(--ink-mid);
+      line-height: 1.6;
+      padding: 0.3rem 0;
+    }
+
+    .sidebar-item strong {
+      display: block;
+      font-weight: 500;
+      color: var(--ink);
+      font-size: 0.82rem;
+    }
+
+    /* ─── RESEARCH ─── */
+    .paper-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .paper-item {
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2rem;
+      align-items: start;
+      transition: background 0.15s;
+    }
+
+    .paper-item:first-child { padding-top: 0; }
+
+    .paper-year {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 400;
+      color: var(--ink-soft);
+      letter-spacing: 0.05em;
+      padding-top: 0.2rem;
+      min-width: 42px;
+    }
+
+    .paper-content {}
+
+    .paper-status {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid;
+      margin-bottom: 0.6rem;
+    }
+
+    .paper-status.working { color: var(--accent-warm); border-color: var(--accent-warm); }
+    .paper-status.published { color: var(--accent); border-color: var(--accent); }
+    .paper-status.progress { color: var(--ink-soft); border-color: var(--rule); }
+
+    .paper-title {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 500;
+      line-height: 1.35;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+
+    .paper-authors {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--ink-soft);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.02em;
+    }
+
+    .paper-abstract {
+      font-size: 0.88rem;
+      color: var(--ink-mid);
+      line-height: 1.75;
+      margin-bottom: 0.75rem;
+    }
+
+    .paper-link {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .paper-link:hover { border-color: var(--accent); }
+
+    /* ─── PROJECTS ─── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+
+    @media (max-width: 640px) {
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+
+    .project-card {
+      background: var(--bg);
+      padding: 2rem;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card:hover { background: var(--bg-card); }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      transition: height 0.3s ease;
+    }
+
+    .project-card:hover::before { height: 100%; }
+
+    .project-tag {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 1rem;
+    }
+
+    .project-title {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+
+    .project-desc {
+      font-size: 0.85rem;
+      color: var(--ink-mid);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tech-pill {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.06em;
+      color: var(--ink-soft);
+      background: var(--bg-card);
+      padding: 0.2rem 0.55rem;
+      border: 1px solid var(--rule);
+    }
+
+    /* ─── NOTES / WRITING ─── */
+    .notes-intro {
+      font-size: 0.95rem;
+      color: var(--ink-mid);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+      font-style: italic;
+      font-family: var(--serif);
+      font-size: 1.1rem;
+    }
+
+    .note-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .note-item {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 2rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--rule);
+      align-items: baseline;
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.2s;
+    }
+
+    .note-item:hover { opacity: 0.7; }
+    .note-item:first-child { padding-top: 0; border-top: 1px solid var(--rule); }
+
+    .note-date {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--ink-soft);
+      letter-spacing: 0.05em;
+    }
+
+    .note-title {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    .note-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      background: var(--bg-card);
+      padding: 0.15rem 0.5rem;
+      border: 1px solid var(--rule);
+      margin-left: 0.75rem;
+      vertical-align: middle;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 3rem 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-left {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--ink-mid);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-label  { animation: fadeUp 0.6s ease both; }
+    h1.hero-name { animation: fadeUp 0.6s 0.1s ease both; }
+    .hero-title  { animation: fadeUp 0.6s 0.2s ease both; }
+    .hero-bio    { animation: fadeUp 0.6s 0.3s ease both; }
+    .hero-cta    { animation: fadeUp 0.6s 0.4s ease both; }
+
+    /* ─── MOBILE NAV ─── */
+    @media (max-width: 520px) {
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.62rem; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <div class="container">
+      <a href="#home" class="nav-brand">Mauro</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#notes">Notes</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section id="home">
+    <div class="container">
+      <div class="hero-label">Financial Economist &amp; Researcher</div>
+      <h1 class="hero-name">Mauro<em>.</em></h1>
+      <p class="hero-title">Investment Strategy, Mathematical Finance &amp; Macroeconomic Theory</p>
+      <p class="hero-bio">
+        I work at the intersection of general equilibrium asset pricing, fiscal-monetary theory, and applied investment research. My work spans inflation dynamics and price level determination, optimal IPO timing, liability-driven investing for central banks and individuals, and quantitative tools that bring rigorous economic models into practice.
+      </p>
+      <div class="hero-cta">
+        <a href="#research" class="btn-primary">View Research</a>
+        <a href="#contact" class="btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2 class="section-title">About <em>me</em></h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            I am a financial economist working at the intersection of general equilibrium theory, macroeconomic policy, and applied investment research. My research addresses foundational questions in asset pricing and monetary economics — including how markets endogenously complete through IPO activity, and how the price level is determined as a market-clearing condition between fiscal obligations and aggregate consumption claims.
+          </p>
+          <p>
+            On the institutional side, I have worked on strategic asset allocation and ALM frameworks for central bank reserves, applying risk factor decomposition and dynamic portfolio insurance to real-world constraints. On the applied side, I build quantitative tools for portfolio optimization, asset allocation, and personal financial planning.
+          </p>
+          <p>
+            I believe the best financial research is not only mathematically honest but genuinely useful — ideas that can be translated into better policy, better portfolios, or clearer thinking about risk, value, and monetary stability.
+          </p>
+        </div>
+        <div class="about-sidebar">
+          <div class="sidebar-block">
+            <div class="sidebar-label">Focus Areas</div>
+            <div class="sidebar-item">Asset Pricing &amp; General Equilibrium</div>
+            <div class="sidebar-item">Fiscal-Monetary Theory &amp; Inflation Dynamics</div>
+            <div class="sidebar-item">Portfolio Optimization &amp; ALM</div>
+            <div class="sidebar-item">Quantitative Investment Strategy</div>
+            <div class="sidebar-item">Mathematical Finance</div>
+          </div>
+          <div class="sidebar-block">
+            <div class="sidebar-label">Currently</div>
+            <div class="sidebar-item">
+              <strong>Under Review — RED</strong>
+              Price Level in a GE Valuation Framework
+            </div>
+            <div class="sidebar-item">
+              <strong>Working Paper</strong>
+              Endogenous Market Completion &amp; IPO Timing
+            </div>
+            <div class="sidebar-item">
+              <strong>Building</strong>
+              ALM tools for personal financial planning
+            </div>
+          </div>
+          <div class="sidebar-block">
+            <div class="sidebar-label">Based in</div>
+            <div class="sidebar-item">Santiago, Chile</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── RESEARCH ── -->
+  <section id="research">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2 class="section-title">Research &amp; <em>Papers</em></h2>
+      </div>
+      <div class="paper-list">
+
+        <div class="paper-item">
+          <div class="paper-year">2025</div>
+          <div class="paper-content">
+            <span class="paper-status working">Under Review</span>
+            <div class="paper-title">The Price Level in a General Equilibrium Valuation Framework</div>
+            <div class="paper-authors">Mauro Villalón</div>
+            <div class="paper-abstract">
+              Proposes a valuation framework that endogenizes the price level as the market-clearing variable between the settlement base and claims on aggregate consumption. Using a continuous-time setting, the paper characterizes the joint dynamics of inflation, output, and fiscal risk — formally distinguishing expected inflation (anchored by the nominal rate) from unexpected inflation arising from real, valuation, and fiscal shocks. A structural fiscal monetization capacity integrates Ricardian and Non-Ricardian regimes, delivering closed-form solutions for asset prices and inflation volatility. As an application, the framework differentiates the transmission of balance sheet operations: zero-net-supply operations are monetarily neutral, whereas valuation shocks — such as pension fund liquidations — may generate inflationary adjustments by steepening the economy's stochastic discount factor.
+            </div>
+            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5522379" target="_blank" class="paper-link">View on SSRN →</a>
+          </div>
+        </div>
+
+        <div class="paper-item">
+          <div class="paper-year">2024</div>
+          <div class="paper-content">
+            <span class="paper-status working">Working Paper</span>
+            <div class="paper-title">Endogenous Market Completion and Optimal IPO Timing in General Equilibrium</div>
+            <div class="paper-authors">with J. Casassus &amp; D. Villalón</div>
+            <div class="paper-abstract">
+              Develops a general equilibrium model in which firms choose optimally when to go public, endogenously completing financial markets. The model links IPO timing to aggregate risk, market incompleteness, and investor welfare, generating novel predictions about listing cycles and the cost of capital.
+            </div>
+            <a href="#" class="paper-link">Draft available on request →</a>
+          </div>
+        </div>
+
+        <div class="paper-item">
+          <div class="paper-year">2017</div>
+          <div class="paper-content">
+            <span class="paper-status progress">Working Paper</span>
+            <div class="paper-title">Asset Liability Management Investment Strategy for International Reserves: A Risk Factors and Contingent Capital Preservation Approach</div>
+            <div class="paper-authors">with N. Goldberger — Central Bank of Chile</div>
+            <div class="paper-abstract">
+              Proposes a methodology for optimal asset allocation of the international reserves of the Central Bank of Chile. The approach optimizes exposures at the level of global systematic risk factors — reducing dimensionality and improving economic interpretability — and introduces a structural rebalancing rule that replicates a protective put option, ensuring contingent capital preservation and liquidity for the reserves portfolio.
+            </div>
+            <a href="#" class="paper-link">Draft available on request →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS ── -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title">Projects &amp; <em>Tools</em></h2>
+      </div>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-tag">Personal Finance · ALM</div>
+          <div class="project-title">Personal ALM Application</div>
+          <div class="project-desc">
+            An asset-liability management tool for individuals. Models future income streams, liabilities, and savings targets under stochastic market conditions — bringing institutional-grade ALM thinking to personal financial planning.
+          </div>
+          <div class="project-tech">
+            <span class="tech-pill">Quantitative Modeling</span>
+            <span class="tech-pill">Stochastic Simulation</span>
+            <span class="tech-pill">Interactive UI</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-tag">Portfolio Theory · Quant</div>
+          <div class="project-title">Asset Allocation Models</div>
+          <div class="project-desc">
+            A suite of quantitative models for strategic and tactical asset allocation. Covers mean-variance optimization, factor models, and regime-aware rebalancing strategies grounded in equilibrium theory.
+          </div>
+          <div class="project-tech">
+            <span class="tech-pill">Mean-Variance</span>
+            <span class="tech-pill">Factor Models</span>
+            <span class="tech-pill">Regime Detection</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-tag">Research Tools · Computation</div>
+          <div class="project-title">Welfare &amp; Equilibrium Analysis Scripts</div>
+          <div class="project-desc">
+            Numerical solvers and simulation scripts supporting general equilibrium research. Handles welfare analysis, market completion diagnostics, and comparative statics for asset pricing models.
+          </div>
+          <div class="project-tech">
+            <span class="tech-pill">Numerical Methods</span>
+            <span class="tech-pill">Equilibrium Solving</span>
+            <span class="tech-pill">Python / MATLAB</span>
+          </div>
+        </div>
+
+        <div class="project-card" style="opacity: 0.6;">
+          <div class="project-tag">Coming Soon</div>
+          <div class="project-title">More tools in development</div>
+          <div class="project-desc">
+            Additional quantitative tools and research artifacts will be published here as they mature. Ideas at the intersection of mathematical finance and practical investment management.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NOTES ── -->
+  <section id="notes">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2 class="section-title">Writing &amp; <em>Notes</em></h2>
+      </div>
+      <p class="notes-intro">
+        Occasional writing on financial economics, quantitative methods, and ideas worth thinking through carefully.
+      </p>
+      <div class="note-list">
+
+        <a href="#" class="note-item">
+          <span class="note-date">Coming soon</span>
+          <span class="note-title">Fiscal shocks and inflation: what the SDF tells us <span class="note-tag">Macro</span></span>
+        </a>
+
+        <a href="#" class="note-item">
+          <span class="note-date">Coming soon</span>
+          <span class="note-title">Why market completeness matters for IPO cycles <span class="note-tag">Research</span></span>
+        </a>
+
+        <a href="#" class="note-item">
+          <span class="note-date">Coming soon</span>
+          <span class="note-title">ALM for individuals: borrowing from central bank practice <span class="note-tag">ALM</span></span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2 class="section-title">Get in <em>touch</em></h2>
+      </div>
+      <p style="max-width:480px; color: var(--ink-mid); line-height: 1.8; margin-bottom: 2.5rem;">
+        I'm open to conversations about research collaboration, quantitative finance, investment strategy, and applied projects. The best way to reach me is by email.
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+          <span style="font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); min-width: 80px;">Email</span>
+          <a href="/cdn-cgi/l/email-protection#2c5543595e6c49414d4540024f4341" style="font-family: var(--serif); font-size: 1.1rem; color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='transparent'"><span class="__cf_email__" data-cfemail="bfc6d0cacdffdad2ded6d391dcd0d2">[email&#160;protected]</span></a>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+          <span style="font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); min-width: 80px;">LinkedIn</span>
+          <a href="#" style="font-family: var(--serif); font-size: 1.1rem; color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='transparent'">linkedin.com/in/yourhandle</a>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+          <span style="font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); min-width: 80px;">SSRN</span>
+          <a href="#" style="font-family: var(--serif); font-size: 1.1rem; color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='transparent'">ssrn.com/author/yourprofile</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-left">Mauro — Financial Economist &amp; Researcher</div>
+        <div class="footer-links">
+          <a href="#about">About</a>
+          <a href="#research">Research</a>
+          <a href="#projects">Projects</a>
+          <a href="#n
